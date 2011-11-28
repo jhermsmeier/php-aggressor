@@ -75,7 +75,7 @@ class Aggressor {
   protected function match( $pattern, $subject ) {
     if( preg_match( $pattern, $subject, $matches ) && isset( $matches[1] ) ) {
       $match = &$matches[1];
-      if( !$this->CDATA )
+      if( $this->CDATA )
         $match = strtr( $match, array( '<![CDATA[' => '', ']]>' => '' ) );
       if( $this->charset && ( $this->RSSCharset != $this->charset ) )
         $match = iconv( $this->RSSCharset, $this->charset, $match );
@@ -125,10 +125,10 @@ class Aggressor {
           $current = &$result->items[$i] = (object) array();
           foreach( $this->itemTags as &$tag )
             $current->$tag = $this->match( "{<$tag.*?>(.*?)</$tag>}si", $item );
-          if( !$this->HTML && isset( $current->description ) )
-            $current->description = $this->striptHTML( $current->description );
-          if( !$this->HTML && isset( $current->title ) )
-            $current->title = $this->striptHTML( $current->title );
+          if( $this->HTML && isset( $current->description ) )
+            $current->description = $this->stripHTML( $current->description );
+          if( $this->HTML && isset( $current->title ) )
+            $current->title = $this->stripHTML( $current->title );
           if( $this->dateFormat && isset( $current->pubDate ) )
             $current->pubDate = date( $this->dateFormat, strtotime( $current->pubDate ) );
           $i++;
