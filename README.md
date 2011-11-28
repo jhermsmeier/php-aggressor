@@ -5,17 +5,17 @@
 ```php
 // you can set the options two ways,
 // either through the constructor:
-$feed = new Aggressor(array(
+$rss = new Aggressor(array(
   'charset' => 'utf-8',
   'userAgent' => 'SomeAgent/0.1'
 ));
 
 // or on the object itself:
-$feed->charset = 'utf-16';
-$feed->userAgent = 'SomeOtherAgent/0.1';
+$rss->charset = 'utf-16';
+$rss->userAgent = 'SomeOtherAgent/0.1';
 
-// 
-
+// fetch a feed
+$rss->get( 'http://example.com/feed.rss' );
 ```
 
 
