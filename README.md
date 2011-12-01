@@ -35,7 +35,7 @@ $rss->get( 'http://example.com/feed.rss' );
 
 - `int Aggressor::$expires = 120` sets the cache expiration in seconds.
 
-- `int Aggressor::$itemLimit = 0` sets the number of item returned. Setting it to zero deactivates the limit.
+- `int Aggressor::$itemLimit = 0` sets the number of items returned. Setting it to zero deactivates the limit.
 
 - `string Aggressor::$dateFormat = 'r'` sets the date format used in returned object. Setting it to something that
   evaluates to false (e.g. an empty string) will prevent formatting times and dates given in the feed.
