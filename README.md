@@ -3,19 +3,23 @@
 ### Usage
 
 ```php
-// you can set the options two ways,
-// either through the constructor:
-$rss = new Aggressor(array(
-  'charset' => 'utf-8',
-  'userAgent' => 'SomeAgent/0.1'
-));
-
-// or on the object itself:
-$rss->charset = 'utf-16';
-$rss->userAgent = 'SomeOtherAgent/0.1';
-
-// fetch a feed
-$rss->get( 'http://example.com/feed.rss' );
+<?php
+  
+  // you can set the options two ways,
+  // either through the constructor:
+  $rss = new Aggressor(array(
+    'charset' => 'utf-8',
+    'userAgent' => 'SomeAgent/0.1'
+  ));
+  
+  // or on the object itself:
+  $rss->charset = 'utf-16';
+  $rss->userAgent = 'SomeOtherAgent/0.1';
+  
+  // fetch a feed
+  $rss->get( 'http://example.com/feed.rss' );
+  
+?>
 ```
 
 
