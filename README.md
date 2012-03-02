@@ -23,6 +23,12 @@
 ```
 
 
+### Dependencies
+
+At least PHP 5.4 is needed.
+The last PHP 5.3 compatible commit is ee5eceae2e40f4cfd895cbb4f80aca8eafd12120.
+
+
 ### Options
 
 - `string Aggressor::$charset = 'utf-8'` must be a valid charset descriptor.

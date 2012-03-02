@@ -26,10 +26,10 @@ class Aggressor {
   protected $RSSCharset = NULL;
   
   // tag lists
-  protected $channelTags = array('title','link','description','language','copyright','managingEditor','webMaster','lastBuildDate','rating','docs');
-  protected $itemTags    = array('title','link','description','author','category','comments','enclosure','guid','pubDate','source');
-  protected $imageTags   = array('title','url','link','width','height');
-  protected $inputTags   = array('title','description','name','link');
+  protected $channelTags = [ 'title', 'link', 'description', 'language', 'copyright', 'managingEditor', 'webMaster', 'lastBuildDate', 'rating', 'docs' ];
+  protected $itemTags    = [ 'title', 'link', 'description', 'author', 'category', 'comments', 'enclosure', 'guid', 'pubDate', 'source' ];
+  protected $imageTags   = [ 'title', 'url', 'link', 'width', 'height' ];
+  protected $inputTags   = [ 'title', 'description', 'name', 'link' ];
   
   // ...
   public function __construct( $options = NULL ) {
@@ -60,11 +60,11 @@ class Aggressor {
   // fetch a feed
   public function fetch( $url ) {
     $ch = curl_init( $url );
-    curl_setopt_array( $ch, array(
+    curl_setopt_array( $ch, [
       CURLOPT_FAILONERROR => TRUE,
       CURLOPT_RETURNTRANSFER => TRUE,
       CURLOPT_USERAGENT => $this->userAgent
-    ));
+    ]);
     $xml = curl_exec( $ch );
     $info = curl_getinfo( $ch );
     curl_close();
@@ -76,7 +76,7 @@ class Aggressor {
     if( preg_match( $pattern, $subject, $matches ) && isset( $matches[1] ) ) {
       $match = &$matches[1];
       if( $this->CDATA )
-        $match = strtr( $match, array( '<![CDATA[' => '', ']]>' => '' ) );
+        $match = strtr( $match, [ '<![CDATA[' => '', ']]>' => '' ] );
       if( $this->charset && ( $this->RSSCharset != $this->charset ) )
         $match = iconv( $this->RSSCharset, $this->charset, $match );
       return trim( $match );
@@ -92,7 +92,7 @@ class Aggressor {
   // parse the rss xml
   public function parse( $xml, $info = NULL ) {
     // include info, if we have it
-    $result = (object) ( is_array( $info ) ? $info : array() );
+    $result = (object) ( is_array( $info ) ? $info : [] );
     // figure out xml encoding
     $result->encoding = $this->match( '{encoding=[\'"](.*?)[\'"]}si', $xml );
     // set rss charset if available
@@ -118,11 +118,11 @@ class Aggressor {
     // parse items
     if( preg_match_all( '{<item(?:| .*?)>(.*?)</item>}si', $xml, $matches ) ) {
       $matches = $matches[1];
-      $result->items = array();
+      $result->items = [];
       $i = 0;
       foreach( $matches as &$item ) {
         if( $i < $this->itemLimit || $this->itemLimit === 0 ) {
-          $current = &$result->items[$i] = (object) array();
+          $current = &$result->items[$i] = new stdClass;
           foreach( $this->itemTags as &$tag )
             $current->$tag = $this->match( "{<$tag.*?>(.*?)</$tag>}si", $item );
           if( $this->HTML && isset( $current->description ) )
